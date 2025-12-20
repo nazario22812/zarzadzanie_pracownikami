@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    background: #1f2937;
+    color: white;
+    -webkit-box-shadow: 2px 3px 20px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 2px 3px 20px 0px rgba(66, 68, 90, 1);
+    box-shadow: 2px 3px 20px 0px rgba(66, 68, 90, 1);
+}
+.topbar h1 {
+    margin: 0;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.footer {
+    text-align: center;
+    background: #e5e7eb;
+}
+
+
+
+.container {
+    padding: 20px;
+    flex: 1;
+   
+}
+
+.login-box {
+    max-width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 50px;
+    border-radius: 6px;
+    text-align: center;
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+
+}
+.login-box h2 {
+    padding-bottom: 30px;
+    font-size: 30px;
+}
+
+.login-box input {
+    width: 90%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+.login-box button {
+    margin-top: 50px;
+    width: 70%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+
+
+.register-box {
+    max-width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 50px;
+    border-radius: 6px;
+    text-align: center;
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 3px 1px rgba(66, 68, 90, 1);
+
+}
+.register-box h2 {
+    padding-bottom: 30px;
+    font-size: 30px;
+}
+
+.register-box input {
+    width: 90%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+.register-box button {
+    margin-top: 50px;
+    width: 70%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+
+
+.linki_pod_logowaniem {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.linki_pod_logowaniem a {
+    text-decoration: none;
+    color: #1f2937;
+    font-size: 14px;
+}
+.linki_pod_logowaniem a:hover {
+    text-decoration: underline;
+}

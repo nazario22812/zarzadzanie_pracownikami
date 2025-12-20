@@ -1,0 +1,11 @@
+FORM (HTML)
+   ↓
+index.php (routing)
+   ↓
+Controller (логіка, $_POST)
+   ↓
+Model (PDO, SQL)
+   ↓
+Controller
+   ↓
+View (HTML)

@@ -72,7 +72,8 @@
             $dane['age'],
             $dane['phone'],
             $dane['email'],
-            $dane['password']
+            $dane['password'],
+            false
         );
     } else {
         // W przeciwnym wypadku — pokaż błędy użytkownikowi

@@ -40,7 +40,14 @@ switch ($page) {
     case 'dashboard':
         $controller->dashboard();
         break;
-
+    case 'logout':
+        session_destroy();
+        echo "<script>
+                alert('Wylogowano pomyślnie.');
+                window.location.href='?page=login';
+            </script>";
+        exit;
+        break;
     default:
         echo "404 – strona nie istnieje";
 }

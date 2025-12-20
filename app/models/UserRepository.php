@@ -28,5 +28,32 @@
             // exit;
             return $this->db->insert($sql);
         }
-    }
+        public function getUserByUsername($username) {
+            $mysqli = $this->db->getMysqli();
+            $username = $mysqli->real_escape_string($username);
+        
+            $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
+        
+            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
+            $result = $mysqli->query($sql);
+
+            if ($result && $row = $result->fetch_assoc()) {
+                require_once '../app/models/User.php';
+                $user = new User(
+                    $row['username'],
+                    $row['first_name'],
+                    $row['last_name'],
+                    $row['age'],
+                    $row['phone'],
+                    $row['email'],
+                    $row['password'],
+                    true
+                );
+           
+                return $user;
+            }
+            return null;
+        }
+
+    };
 ?>

@@ -2,7 +2,7 @@
 
 <nav>
     <a href="?page=dashboard">Dashboard</a> |
-    <a href="?page=login">Wyloguj</a>
+    <a href="?page=logout">Wyloguj</a>
 </nav>
 
 <p>Witaj w panelu!</p>

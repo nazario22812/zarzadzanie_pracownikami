@@ -12,13 +12,17 @@ class User {
     protected $date;
     protected $status; 
 
-    function __construct($userName, $firstName, $lastName, $wiek, $phone,$email ,$passwd) {
+    function __construct($userName, $firstName, $lastName, $wiek, $phone,$email ,$passwd, $isHashed = false) {
         $this->userName = $userName;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->wiek = $wiek;
         $this->phone = $phone;
-        $this->passwd = password_hash( $passwd, PASSWORD_DEFAULT);
+        if ($isHashed) {
+            $this->passwd = $passwd;
+        } else {
+            $this->passwd = password_hash($passwd, PASSWORD_DEFAULT);
+        }        
         $this->email = $email;
 
         $this->date = date("Y-m-d");

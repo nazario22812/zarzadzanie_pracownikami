@@ -54,6 +54,33 @@
             }
             return null;
         }
+        
+        public function getUserByPhone($phone) {
+            $mysqli = $this->db->getMysqli();
+            $phone = $mysqli->real_escape_string($phone);
+        
+            $sql = "SELECT * FROM users WHERE phone = '$phone' LIMIT 1";
+        
+            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
+            $result = $mysqli->query($sql);
 
+            if ($result && $row = $result->fetch_assoc()) {
+                require_once '../app/models/User.php';
+                $user = new User(
+                    $row['username'],
+                    $row['first_name'],
+                    $row['last_name'],
+                    $row['age'],
+                    $row['phone'],
+                    $row['email'],
+                    $row['password'],
+                    true
+                );
+           
+                return $user;
+            }
+            return null;
+        }
     };
+
 ?>

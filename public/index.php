@@ -15,7 +15,7 @@ $page = $_GET['page'] ?? 'login';
 */
 if (
     !isset($_SESSION['user']) &&
-    !in_array($page, ['login', 'register'])
+    !in_array($page, ['login', 'register', 'reset'])
 ) {
     $page = 'login';
 }
@@ -40,13 +40,18 @@ switch ($page) {
     case 'dashboard':
         $controller->dashboard();
         break;
+    case 'konto':
+        $controller->konto();
+        break;
     case 'logout':
         session_destroy();
         echo "<script>
-                alert('Wylogowano pomyślnie.');
                 window.location.href='?page=login';
             </script>";
         exit;
+        break;
+    case 'reset':
+        $controller->zapomniales_haslo();
         break;
     default:
         echo "404 – strona nie istnieje";

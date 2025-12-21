@@ -6,7 +6,10 @@ body {
     display: flex;
     flex-direction: column;
 }
-
+a {
+    text-decoration: none;
+    color: inherit;
+}
 .topbar {
     background: #1f2937;
     color: white;
@@ -30,6 +33,12 @@ body {
 
 .container {
     padding: 20px;
+    flex: 1;
+   
+}
+
+.container1 {
+    padding: 0px;
     flex: 1;
    
 }
@@ -122,3 +131,68 @@ body {
 .linki_pod_logowaniem a:hover {
     text-decoration: underline;
 }
+
+
+.navigacja{
+    display: flex; /* Włącza Flexbox */
+    justify-content: space-between; /* Rozsuwa elementy na boki */
+    align-items: center; /* Wyśrodkowuje elementy w pionie */
+}
+
+.parent {
+    height: 100cqh;
+    display: grid;
+    /* Pierwsza kolumna bierze 3 części, druga 7 części wolnego miejsca */
+    grid-template-columns: 1.5fr 8.5fr; 
+    grid-template-rows: 1fr;
+    gap: 0px;
+}
+
+.div1 {
+    border-right: #1f2937 1px solid; 
+    padding: 30px;
+    
+}
+
+.profile-container {
+        
+        max-width: 1200px;
+        margin: 20px auto;
+        background: white;
+        padding: 50px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .profile-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .profile-header h2 { margin: 0; color: #333; }
+    
+    .info-grid {
+        padding-top: 80px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .info-item { margin-bottom: 15px; }
+    .info-item label { 
+        display: block; 
+        font-weight: bold; 
+        color: #666; 
+        font-size: 0.9rem;
+    }
+    .info-item span { 
+        font-size: 1.1rem; 
+        color: #222; 
+    }
+    .badge {
+        background: #e1f5fe;
+        color: #0288d1;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }

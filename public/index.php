@@ -15,7 +15,7 @@ $page = $_GET['page'] ?? 'login';
 */
 if (
     !isset($_SESSION['user']) &&
-    !in_array($page, ['login', 'register', 'reset'])
+    !in_array($page, ['login', 'register', 'reset', 'verify_code', 'new_password'])
 ) {
     $page = 'login';
 }
@@ -53,6 +53,13 @@ switch ($page) {
     case 'reset':
         $controller->zapomniales_haslo();
         break;
+    case 'verify_code':
+        $controller->verify_code();
+        break;
+    case 'new_password':
+        $controller->set_new_password();
+        break;
+
     default:
         echo "404 – strona nie istnieje";
 }

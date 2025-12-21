@@ -8,7 +8,7 @@
 <body>
 
 <header class="topbar">
-    <h1>Mój Magazyn</h1>
+    <h1><a href="?page=login">Mój Magazyn</a></h1>
 </header>
 
 <main class="container">

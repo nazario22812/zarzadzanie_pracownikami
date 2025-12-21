@@ -81,6 +81,18 @@
             }
             return null;
         }
+
+        public function updatePassword($phone, $newPassword) {
+            $mysqli = $this->db->getMysqli();
+            $phone = $mysqli->real_escape_string($phone);
+    
+    // HASZOWANIE NOWEGO HASŁA (Bardzo ważne!)
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    
+            $sql = "UPDATE users SET password = '$hashedPassword' WHERE phone = '$phone'";
+    
+            return $this->db->insert($sql); // insert() u Ciebie wykonuje query
+        }
     };
 
 ?>

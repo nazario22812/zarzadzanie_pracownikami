@@ -21,7 +21,7 @@
 
         <div class="linki_pod_logowaniem">
             <a href="?page=register">Nie masz konta? Zarejestruj się</a>
-            <a href="?page=reset">Zapomniałeś hasła?</a>
+            <a href="?page=reset">Zapomniałeś hasło?</a>
         </div>
 
     </form>

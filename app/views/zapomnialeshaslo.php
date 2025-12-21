@@ -1,4 +1,5 @@
-<h2>Przypomnienie hasła</h2>
+<div class="reset-box">
+    <h2>Przypomnienie hasła</h2>
 
     <form method="post" action="?page=reset">
 
@@ -15,4 +16,6 @@
 
         
 
-</form>
+    </form>
+
+</div>

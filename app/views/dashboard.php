@@ -28,12 +28,13 @@
                         <span>Zamówienia</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="">
+                    <?php if (isset($_SESSION['status']) && $_SESSION['status'] == 2): ?>                    <li>
+                        <a href="?page=uzytkownicy">
                         <i class="icon-users"></i>
                         <span>Użytkownicy</span>
                         </a>
                     </li>
+                    <?php endif; ?>
                     <li id="logoutli">
                         <a href="?page=logout">
                         <i class="icon-logout"></i>

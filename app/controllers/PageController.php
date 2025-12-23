@@ -23,7 +23,7 @@ class PageController {
         // Sprawdzamy czy użytkownik istnieje i czy hasło pasuje do hasza z bazy
         if ($user && password_verify($password, $user->getPasswd())) {
             $_SESSION['user'] = $user->getUserName();
-            $_SESSION['status'] = $user->getStatus();
+            $_SESSION['status'] = (int)$ur->getUserStatus($user->getUserName());
             echo "<script>
                     alert('Logowanie zakończone sukcesem.');
                     window.location.href='?page=dashboard';
@@ -209,6 +209,19 @@ class PageController {
 
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/konto.php';
+        require '../app/views/layout/footer.php';
+    }
+
+    public function uzytkowniki() {
+        if (!isset($_SESSION['user']) || $_SESSION['status'] != 2) {
+            header("Location: ?page=login");
+            exit;
+        }
+
+        
+
+        require '../app/views/layout/header_zalogowany.php';
+        require '../app/views/uzytkowniki.php';
         require '../app/views/layout/footer.php';
     }
 }

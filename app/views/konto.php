@@ -1,8 +1,21 @@
+
+<?php
+   
+?>
+
+
 <div class="profile-container">
     <div class="profile-header">
         <h2>Mój Profil</h2>
         <span class="badge" style="margin-left: 15px;">
-            <?php echo ($user->getStatus() == 2) ? 'Administrator' : 'Pracownik'; ?>
+            <?php 
+                require_once '../app/models/UserRepository.php';
+                $ur = new UserRepository();
+                $user = $ur->getUserByUsername($_SESSION['user']);
+
+            
+                echo ($ur->getUserStatus($_SESSION['user']) == 2) ? 'Administrator' : 'Pracownik'; 
+            ?>
         </span>
     </div>
 
@@ -29,7 +42,11 @@
         </div>
         <div class="info-item">
             <label>Data rejestracji</label>
-            <span><?php echo $user->getDate(); ?></span>
+            <span>
+                <?php 
+                    echo $ur->getUserData($_SESSION['user']); 
+                ?>
+            </span>
         </div>
     </div>
 </div>

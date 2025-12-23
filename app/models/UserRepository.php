@@ -82,6 +82,33 @@
             return null;
         }
 
+        public function getUserById($id) {
+            $mysqli = $this->db->getMysqli();
+            $id = $mysqli->real_escape_string($id);
+
+            $sql = "SELECT * FROM users WHERE id = '$id' LIMIT 1";
+
+            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
+            $result = $mysqli->query($sql);
+
+            if ($result && $row = $result->fetch_assoc()) {
+                require_once '../app/models/User.php';
+                $user = new User(
+                    $row['username'],
+                    $row['first_name'],
+                    $row['last_name'],
+                    $row['age'],
+                    $row['phone'],
+                    $row['email'],
+                    $row['password'],
+                    true
+                );
+           
+                return $user;
+            }
+            return null;
+        }
+
         public function updatePassword($phone, $newPassword) {
             $mysqli = $this->db->getMysqli();
             $phone = $mysqli->real_escape_string($phone);
@@ -92,6 +119,95 @@
             $sql = "UPDATE users SET password = '$hashedPassword' WHERE phone = '$phone'";
     
             return $this->db->insert($sql); // insert() u Ciebie wykonuje query
+        }
+
+        public function getUserStatus($username) {
+            $mysqli = $this->db->getMysqli();
+            $username = $mysqli->real_escape_string($username);
+        
+            $sql = "SELECT status FROM users WHERE username = '$username' LIMIT 1";
+        
+            $result = $mysqli->query($sql);
+
+            if ($result && $row = $result->fetch_assoc()) {
+                return $row['status'];
+            }
+            return null;
+        }
+        public function getUserStatusById($id) {
+            $mysqli = $this->db->getMysqli();
+            $id = (int)$id;
+        
+            $sql = "SELECT status FROM users WHERE id = $id LIMIT 1";
+        
+            $result = $mysqli->query($sql);
+
+            if ($result && $row = $result->fetch_assoc()) {
+                return $row['status'];
+            }
+            return null;
+        }
+
+        public function getUserData($username) {
+            $mysqli = $this->db->getMysqli();
+            $username = $mysqli->real_escape_string($username);
+        
+            $sql = "SELECT date FROM users WHERE username = '$username' LIMIT 1";
+        
+            $result = $mysqli->query($sql);
+
+            if ($result && $row = $result->fetch_assoc()) {
+                return $row['date'];
+            }
+            return null;
+        }
+
+        public function getAllUsers() {
+            $mysqli = $this->db->getMysqli();
+            $sql = "SELECT * FROM users";
+            $result = $mysqli->query($sql);
+            $users = [];
+
+            if ($result) {
+                while ($row = $result->fetch_assoc()) {
+                    // Zamiast tworzyć obiekt 'new User', dodajemy całą tablicę $row
+                    $users[] = $row; 
+                }
+            }
+            return $users;
+        }
+
+        public function updateUserEmail($id, $newEmail) {
+            $mysqli = $this->db->getMysqli();
+            $id = (int)$id; // Переконуємось, що це число
+            $newEmail = $mysqli->real_escape_string($newEmail);
+
+    // Міняємо WHERE на id
+            $sql = "UPDATE users SET email = '$newEmail' WHERE id = $id";
+
+            return $mysqli->query($sql); 
+        }
+
+        public function updateUserPhone($id, $newPhone) {
+            $mysqli = $this->db->getMysqli();
+            $id = (int)$id;
+            $newPhone = $mysqli->real_escape_string($newPhone);
+
+            // Міняємо WHERE на id
+            $sql = "UPDATE users SET phone = '$newPhone' WHERE id = $id";
+
+            return $mysqli->query($sql);
+        }
+
+        public function updateUserStatus($id, $newStatus) {
+            $mysqli = $this->db->getMysqli();
+            $id = (int)$id;
+            $newStatus = (int)$newStatus;
+
+    // Міняємо WHERE на id
+            $sql = "UPDATE users SET status = $newStatus WHERE id = $id";
+
+            return $mysqli->query($sql);
         }
     };
 

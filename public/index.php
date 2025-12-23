@@ -20,12 +20,19 @@ if (
     $page = 'login';
 }
 
+// // Тимчасово додайте це в index.php для тесту:
+// if (isset($_SESSION['user']) && $_SESSION['user'] == 'ytka') {
+//     $_SESSION['status'] = 2; 
+// }
+
 /*
 |--------------------------------------------------------------------------
 | Routing
 |--------------------------------------------------------------------------
 */
 require_once '../app/controllers/PageController.php';
+require_once '../app/controllers/UserController.php';
+$usercontrl = new UserController();
 $controller = new PageController();
 
 switch ($page) {
@@ -60,6 +67,12 @@ switch ($page) {
         $controller->set_new_password();
         break;
 
+    case 'uzytkownicy':
+        $controller->uzytkowniki();
+        break;
+    case 'user_details':
+        $usercontrl->details();
+        break;
     default:
         echo "404 – strona nie istnieje";
 }

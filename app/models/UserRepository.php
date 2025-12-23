@@ -55,6 +55,20 @@
             return null;
         }
         
+        public function getUserId($username) {
+            $mysqli = $this->db->getMysqli();
+            $username = $mysqli->real_escape_string($username);
+            $sql = "SELECT id FROM users WHERE username = '$username'";
+            $result = $mysqli->query($sql);
+
+    // Перевіряємо, чи знайшли користувача
+            if ($row = $result->fetch_assoc()) {
+                return (int)$row['id']; // Повертаємо тільки ID як число
+            }
+
+            return null; // Якщо користувача не знайдено
+         }
+
         public function getUserByPhone($phone) {
             $mysqli = $this->db->getMysqli();
             $phone = $mysqli->real_escape_string($phone);

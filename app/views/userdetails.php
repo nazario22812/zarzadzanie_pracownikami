@@ -1,34 +1,3 @@
-
-<?php
-   $ur = new UserRepository();
-
-// ОБРОБКА ОНОВЛЕННЯ (спрацює після натискання кнопки)
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_type'])) {
-        $id = (int)$_POST['userId'];
-        $type = $_POST['update_type'];
-
-        if ($type === 'email' && !empty($_POST['newEmail'])) {
-            $ur->updateUserEmail($id, $_POST['newEmail']);
-        } elseif ($type === 'phone' && !empty($_POST['newPhone'])) {
-            $ur->updateUserPhone($id, $_POST['newPhone']);
-        } elseif ($type === 'status' && isset($_POST['newStatus'])) {
-            $ur->updateUserStatus($id, $_POST['newStatus']);
-        }
-
-    // Перезавантажуємо сторінку, щоб побачити нові дані і уникнути помилок
-        header("Location: ?page=user_details&id=" . $id);
-        exit;
-    }
-
-// ЗАВАНТАЖЕННЯ ДАНИХ (для відображення профілю)
-    $targetUser = null;
-    if (isset($_GET['id'])) {
-        $userId = (int)$_GET['id'];
-        $targetUser = $ur->getUserById($userId); 
-    }
-?>
-
-
 <div class="profile-container">
     <?php 
         require_once '../app/models/UserRepository.php';

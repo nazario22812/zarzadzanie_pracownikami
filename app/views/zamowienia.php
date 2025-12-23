@@ -53,5 +53,39 @@
         </aside>
 
     </div>
-    <div class="div2">2</div>
+    <div class="div2">
+        <div class="div2">
+            <div class="checkout-container">
+                <h2 class="section-title">Dodaj nowy przedmiot do zamówienia</h2>
+
+                <div class="checkout-section" style="max-width: 600px; margin: 0 auto;">
+                    <h3><i class="icon-plus"></i> Wpisz dane produktu</h3>
+            
+                    <form action="?page=zamowienia" method="POST" class="manual-add-form">
+                        <div class="form-group">
+                            <label>Nazwa produktu</label>
+                            <input type="text" name="custom_name" placeholder="np. Młotek, Gwoździe..." required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Cena za sztukę (zł)</label>
+                                <input type="number" step="0.01" name="custom_price" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Ilość</label>
+                                <input type="number" name="custom_quantity" value="1" min="1" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-order" style="width: 100%; margin-top: 10px;">
+                            <i class="icon-add"></i> Dodaj do koszyka
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
 </div>

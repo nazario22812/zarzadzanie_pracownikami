@@ -23,9 +23,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="?page=zamowienia">
                         <i class="icon-zamow"></i>
                         <span>Zamówienia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?page=koszyk">
+                        <i class="icon-zamow"></i>
+                        <span>Koszyk</span>
                         </a>
                     </li>
                     <?php if (isset($_SESSION['status']) && $_SESSION['status'] == 2): ?>                    <li>
@@ -83,11 +89,17 @@
                         
                     </td>
                     <td>
+                        <?php if ($_SESSION['user'] != $user['username']): ?>
                         <button class="btn-info" onclick="
-                            <?php echo 'window.location.href=\'?page=user_details&id=' . $user['id'] . '\''; ?>
-                        ">
+                                <?php    
+                                    echo 'window.location.href=\'?page=user_details&id=' . $user['id'] . '\''; 
+                                ?>
+                            ">
                             Szczegóły
                         </button>
+                        <?php else: ?>
+                            <span class="badge-me">To Ty</span>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

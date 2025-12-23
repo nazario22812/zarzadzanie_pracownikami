@@ -224,4 +224,76 @@ class PageController {
         require '../app/views/uzytkowniki.php';
         require '../app/views/layout/footer.php';
     }
+
+    public function zamowienia() {
+        if (!isset($_SESSION['user'])) {
+            header("Location: ?page=login");
+            exit;
+        }
+
+
+        // Код для обробки форми (наприклад, у PageController чи index.php)
+       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_name'])) {
+            $ur = new UserRepository();
+            $username = $_SESSION['user'] ?? null;
+    
+    // Отримуємо ID користувача через ваш метод (вже виправлений)
+            $userId = $ur->getUserId($username);
+
+            if (!$userId) {
+                die("Uzytkownik nie znaleziony.");
+            }
+
+            $name = trim($_POST['custom_name']);
+            $price = (float)$_POST['custom_price'];
+            $qty = (int)$_POST['custom_quantity'];
+
+            $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+            $mysqli = $db->getMysqli();
+
+    // --- НОВА ЛОГІКА ПЕРЕВІРКИ ---
+    // Шукаємо, чи є вже товар з такою назвою та ціною
+            $checkStmt = $mysqli->prepare("SELECT id FROM products WHERE name = ? AND price = ? LIMIT 1");
+            $checkStmt->bind_param("sd", $name, $price);
+            $checkStmt->execute();
+            $result = $checkStmt->get_result();
+            $existingProduct = $result->fetch_assoc();
+
+            if ($existingProduct) {
+        // Якщо товар знайдено, використовуємо його ID
+                $productId = $existingProduct['id'];
+            } else {
+        // Якщо товару немає, створюємо новий рядок у products
+                $insertProdStmt = $mysqli->prepare("INSERT INTO products (name, price, stock) VALUES (?, ?, ?)");
+                $stock = 999;
+                $insertProdStmt->bind_param("sdi", $name, $price, $stock);
+                $insertProdStmt->execute();
+                $productId = $mysqli->insert_id;
+            }
+    // ----------------------------
+
+    // Тепер додаємо в кошик, використовуючи отриманий $productId
+            $stmtCart = $mysqli->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+            $stmtCart->bind_param("iii", $userId, $productId, $qty);
+            $stmtCart->execute();
+
+            header("Location: ?page=koszyk");
+            exit;
+        }
+
+        require '../app/views/layout/header_zalogowany.php';
+        require '../app/views/zamowienia.php';
+        require '../app/views/layout/footer.php';
+    }
+
+    public function koszyk() {
+        if (!isset($_SESSION['user'])) {
+            header("Location: ?page=login");
+            exit;
+        }
+
+        require '../app/views/layout/header_zalogowany.php';
+        require '../app/views/koszyk.php';
+        require '../app/views/layout/footer.php';
+    }
 }

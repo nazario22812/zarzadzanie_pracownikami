@@ -140,7 +140,7 @@ a {
 }
 
 .parent {
-    height: 100cqh;
+    height: 100dvh;
     display: grid;
     /* Pierwsza kolumna bierze 3 części, druga 7 części wolnego miejsca */
     grid-template-columns: 1.5fr 8.5fr; 
@@ -302,7 +302,10 @@ a {
     }
 
 
-
+.order-box {
+    margin: 20px;  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 
     /* Контейнер для форми зміни даних */

@@ -17,17 +17,12 @@
                         </a>   
                     </li>
                     <li>
-                        <a href="">
+                        <a href="?page=produkty">
                         <i class="icon-box"></i>
                         <span>Produkty</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="?page=zamowienia">
-                        <i class="icon-zamow"></i>
-                        <span>Zamówienia</span>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="?page=koszyk">
                         <i class="icon-zamow"></i>
@@ -38,6 +33,13 @@
                         <a href="?page=uzytkownicy">
                         <i class="icon-users"></i>
                         <span>Użytkownicy</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['status']) && $_SESSION['status'] == 2): ?>                    <li>
+                        <a href="?page=zamowienia">
+                        <i class="icon-users"></i>
+                        <span>Zamowienia</span>
                         </a>
                     </li>
                     <?php endif; ?>

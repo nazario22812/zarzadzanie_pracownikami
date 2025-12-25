@@ -17,17 +17,12 @@
                         </a>   
                     </li>
                     <li>
-                        <a href="">
+                        <a href="?page=produkty">
                         <i class="icon-box"></i>
                         <span>Produkty</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="?page=zamowienia">
-                        <i class="icon-zamow"></i>
-                        <span>Zamówienia</span>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="?page=koszyk">
                         <i class="icon-zamow"></i>
@@ -38,6 +33,13 @@
                         <a href="?page=uzytkownicy">
                         <i class="icon-users"></i>
                         <span>Użytkownicy</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['status']) && $_SESSION['status'] == 2): ?>                    <li>
+                        <a href="?page=zamowienia">
+                        <i class="icon-users"></i>
+                        <span>Zamowienia</span>
                         </a>
                     </li>
                     <?php endif; ?>
@@ -53,39 +55,41 @@
         </aside>
 
     </div>
-    <div class="div2">
-        <div class="div2">
-            <div class="checkout-container">
-                <h2 class="section-title">Dodaj nowy przedmiot do zamówienia</h2>
-
-                <div class="checkout-section" style="max-width: 600px; margin: 0 auto;">
-                    <h3><i class="icon-plus"></i> Wpisz dane produktu</h3>
-            
-                    <form action="?page=zamowienia" method="POST" class="manual-add-form">
-                        <div class="form-group">
-                            <label>Nazwa produktu</label>
-                            <input type="text" name="custom_name" placeholder="np. Młotek, Gwoździe..." required>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Cena za sztukę (zł)</label>
-                                <input type="number" step="0.01" name="custom_price" placeholder="0.00" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Ilość</label>
-                                <input type="number" name="custom_quantity" value="1" min="1" required>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-order" style="width: 100%; margin-top: 10px;">
-                            <i class="icon-add"></i> Dodaj do koszyka
-                        </button>
-                    </form>
-                </div>
-            </div>
+    <div class="div2" style="margin: 20px;">
+        <div class="orders-box">
+            <h2>Lista zamówień</h2>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>ID Zamówienia</th>
+                        <th>ID Użytkownika</th>
+                        <th>Data Zamówienia</th>
+                        <th>Kwota Całkowita</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($order['id']); ?></td>
+                            <td><?php echo htmlspecialchars($order['user_id']); ?></td>
+                            <td><?php echo htmlspecialchars($order['list_produktow'] ?: 'Brak produktów'); ?></td>
+                            <td><?php echo number_format($order['total_price'], 2, ',', ' '); ?> zł</td>
+                            <td>
+                                <form method="POST" action="?page=update_status">
+                                    <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
+                                    <select name="new_status" onchange="this.form.submit()">
+                                        <option value="W trakcie" <?php echo $order['status'] == 'W trakcie' ? 'selected' : ''; ?>>W trakcie</option>
+                                        <option value="Dostarczono" <?php echo $order['status'] == 'Dostarczono' ? 'selected' : ''; ?>>Dostarczono</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-        
+            
 
     </div>
 </div>

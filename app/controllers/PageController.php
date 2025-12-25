@@ -225,65 +225,45 @@ class PageController {
         require '../app/views/layout/footer.php';
     }
 
-    public function zamowienia() {
+    public function produkty() {
         if (!isset($_SESSION['user'])) {
             header("Location: ?page=login");
             exit;
         }
 
+        $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+        $mysqli = $db->getMysqli();
 
-        // Код для обробки форми (наприклад, у PageController чи index.php)
-       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_name'])) {
+    // --- ОБРОБКА ДОДАВАННЯ В КОШИК ---
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
             $ur = new UserRepository();
-            $username = $_SESSION['user'] ?? null;
-    
-    // Отримуємо ID користувача через ваш метод (вже виправлений)
-            $userId = $ur->getUserId($username);
+            $userId = $ur->getUserId($_SESSION['user']);
 
             if (!$userId) {
                 die("Uzytkownik nie znaleziony.");
             }
 
-            $name = trim($_POST['custom_name']);
-            $price = (float)$_POST['custom_price'];
-            $qty = (int)$_POST['custom_quantity'];
+            $productId = (int)$_POST['product_id'];
+            $qty = (int)$_POST['quantity'];
 
-            $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
-            $mysqli = $db->getMysqli();
-
-    // --- НОВА ЛОГІКА ПЕРЕВІРКИ ---
-    // Шукаємо, чи є вже товар з такою назвою та ціною
-            $checkStmt = $mysqli->prepare("SELECT id FROM products WHERE name = ? AND price = ? LIMIT 1");
-            $checkStmt->bind_param("sd", $name, $price);
-            $checkStmt->execute();
-            $result = $checkStmt->get_result();
-            $existingProduct = $result->fetch_assoc();
-
-            if ($existingProduct) {
-        // Якщо товар знайдено, використовуємо його ID
-                $productId = $existingProduct['id'];
-            } else {
-        // Якщо товару немає, створюємо новий рядок у products
-                $insertProdStmt = $mysqli->prepare("INSERT INTO products (name, price, stock) VALUES (?, ?, ?)");
-                $stock = 999;
-                $insertProdStmt->bind_param("sdi", $name, $price, $stock);
-                $insertProdStmt->execute();
-                $productId = $mysqli->insert_id;
-            }
-    // ----------------------------
-
-    // Тепер додаємо в кошик, використовуючи отриманий $productId
+        // Додаємо товар, який вже існує в таблиці products
             $stmtCart = $mysqli->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
             $stmtCart->bind_param("iii", $userId, $productId, $qty);
-            $stmtCart->execute();
-
-            header("Location: ?page=koszyk");
-            exit;
+        
+            if ($stmtCart->execute()) {
+                header("Location: ?page=koszyk");
+                exit;
+            }
         }
 
+    // --- ОТРИМАННЯ ТОВАРІВ ДЛЯ КАТАЛОГУ ---
+        $result = $mysqli->query("SELECT * FROM products");
+        $allProducts = $result->fetch_all(MYSQLI_ASSOC);
+
         require '../app/views/layout/header_zalogowany.php';
-        require '../app/views/zamowienia.php';
+        require '../app/views/produkty.php';
         require '../app/views/layout/footer.php';
+        
     }
 
     public function koszyk() {
@@ -292,8 +272,108 @@ class PageController {
             exit;
         }
 
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ur = new UserRepository();
+            $userId = $ur->getUserId($_SESSION['user']);
+        
+            $address = $_POST['shipping_address'] ?? '';
+            $zipCode = $_POST['zip_code'] ?? '';
+            $city = $_POST['city'] ?? '';
+            $fullAddress = trim($address) . ", " . trim($zipCode) . " " . trim($city);
+        
+            $phone = $_POST['phone'] ?? '';
+        // Перетворюємо в float, щоб уникнути помилок з типами даних у базі
+            $totalAmount = (float)($_POST['total_amount'] ?? 0); 
+            $trackingnumber = "TN" . rand(100000, 999999);
+        
+            $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+            $mysqli = $db->getMysqli();
+        
+        // 1. ВСТАВЛЯЄМО ЗАМОВЛЕННЯ (status поставиться автоматично 'W trakcie')
+            $stmtOrder = $mysqli->prepare("INSERT INTO orders (user_id, total_price, tracking_number, shipping_address, phone_number) VALUES (?, ?, ?, ?, ?)");
+            $stmtOrder->bind_param("idsss", $userId, $totalAmount, $trackingnumber, $fullAddress, $phone);
+        
+            if ($stmtOrder->execute()) {
+                $orderId = $mysqli->insert_id; // Отримуємо ID нового замовлення
+
+            // 2. ПЕРЕНОСИМО ТОВАРИ З cart В order_items
+            // Використовуємо INSERT INTO ... SELECT для швидкості та точності
+            // 2. ПЕРЕНОСИМО ТОВАРИ, отримуючи назву та ціну з таблиці products
+                $sqlTransfer = "INSERT INTO order_items (order_id, product_id, product_name, quantity, price_at_purchase)
+                    SELECT ?, c.product_id, p.name, c.quantity, p.price 
+                    FROM cart c
+                    JOIN products p ON c.product_id = p.id
+                    WHERE c.user_id = ?";
+
+                $stmtTransfer = $mysqli->prepare($sqlTransfer);
+                $stmtTransfer->bind_param("ii", $orderId, $userId);
+                $stmtTransfer->execute();
+
+            // 3. ОЧИЩАЄМО КОШИК
+                $stmClearCart = $mysqli->prepare("DELETE FROM cart WHERE user_id = ?");
+                $stmClearCart->bind_param("i", $userId);
+                $stmClearCart->execute();
+
+                echo "<script>alert('Zamówienie zostało złożone pomyślnie.'); window.location.href='?page=dashboard';</script>";
+                exit;
+            }
+        }
+
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/koszyk.php';
         require '../app/views/layout/footer.php';
+    }
+
+    public function zamowienia() {
+        if (!isset($_SESSION['user']) || $_SESSION['status'] != 2) {
+            header("Location: ?page=login");
+            exit;
+        }
+        $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+        $mysqli = $db->getMysqli();
+        $sql = "SELECT o.*, 
+            GROUP_CONCAT(CONCAT(oi.product_name, ' (x', oi.quantity, ')') SEPARATOR ', ') AS list_produktow
+            FROM orders o
+            LEFT JOIN order_items oi ON o.id = oi.order_id
+            GROUP BY o.id
+            ORDER BY o.order_date DESC
+        ";
+        
+        $result = $mysqli->query($sql);
+        $orders = $result->fetch_all(MYSQLI_ASSOC);
+        
+        
+
+        require '../app/views/layout/header_zalogowany.php';
+        require '../app/views/zamowienia.php';
+        require '../app/views/layout/footer.php';
+    }
+
+    public function update_status() {
+        $orderId = $_POST['order_id'];
+        $newStatus = $_POST['new_status'];
+
+        $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+        $mysqli = $db->getMysqli();
+
+    // 1. Оновлюємо статус замовлення
+        $stmt = $mysqli->prepare("UPDATE orders SET status = ? WHERE id = ?");
+        $stmt->bind_param("si", $newStatus, $orderId);
+        $stmt->execute();
+
+    // 2. Якщо замовлення виконано, зменшуємо кількість продуктів на складі
+        if ($newStatus == 'Dostarczono') {
+        // Отримуємо всі товари з цього замовлення
+            $items = $mysqli->query("SELECT product_id, quantity FROM order_items WHERE order_id = $orderId");
+        
+            while ($item = $items->fetch_assoc()) {
+                $pId = $item['product_id'];
+                $qty = $item['quantity'];
+            // Зменшуємо stock у таблиці products
+                $mysqli->query("UPDATE products SET stock = stock + $qty WHERE id = $pId");
+            }
+        }
+
+        header("Location: ?page=zamowienia");
     }
 }

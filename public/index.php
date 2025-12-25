@@ -73,12 +73,19 @@ switch ($page) {
     case 'user_details':
         $usercontrl->details();
         break;
-    case 'zamowienia':
-        $controller->zamowienia();
+    case 'produkty':
+        $controller->produkty();
         break;
     case 'koszyk':
         $controller->koszyk();
         break;
+
+    case 'zamowienia':
+        $controller->zamowienia();
+        break;
+    case 'update_status':
+        $controller->update_status();
+        break;  
     default:
         echo "404 – strona nie istnieje";
 }

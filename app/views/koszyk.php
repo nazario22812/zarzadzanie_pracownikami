@@ -17,17 +17,12 @@
                         </a>   
                     </li>
                     <li>
-                        <a href="">
+                        <a href="?page=produkty">
                         <i class="icon-box"></i>
                         <span>Produkty</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="?page=zamowienia">
-                        <i class="icon-zamow"></i>
-                        <span>Zamówienia</span>
-                        </a>
-                    </li>
+                    
                     <li>
                         <a href="?page=koszyk">
                         <i class="icon-zamow"></i>
@@ -38,6 +33,13 @@
                         <a href="?page=uzytkownicy">
                         <i class="icon-users"></i>
                         <span>Użytkownicy</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['status']) && $_SESSION['status'] == 2): ?>                    <li>
+                        <a href="?page=zamowienia">
+                        <i class="icon-users"></i>
+                        <span>Zamowienia</span>
                         </a>
                     </li>
                     <?php endif; ?>
@@ -58,7 +60,7 @@
         <div class="checkout-container">
             <h2 class="section-title">Finalizacja zamówienia</h2>
 
-            <form action="?page=process_order" method="POST" class="checkout-form">
+            <form action="?page=koszyk" method="POST" class="checkout-form">
                 <div class="checkout-grid">
             
                     <div class="checkout-section">
@@ -142,14 +144,14 @@
                         <h4>Metoda płatności</h4>
                         <label class="radio-container">
                             <input type="radio" name="payment" value="cod" checked>
-                            <span class="checkmark"></span> Za pobraniem (при отриманні)
+                            <span class="checkmark"></span> Za pobraniem (gotówka)
                         </label>
                         <label class="radio-container">
                             <input type="radio" name="payment" value="transfer">
                             <span class="checkmark"></span> Przelew bankowy
                         </label>
                     </div>
-
+                    <input type="hidden" name="total_amount" value="<?php echo $total; ?>">
                     <button type="submit" class="btn-order">Potwierdzam zamówienie</button>
                 </div>
                 </div>

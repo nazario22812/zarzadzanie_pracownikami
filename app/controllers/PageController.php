@@ -72,7 +72,36 @@ class PageController {
 
 
     public function dashboard() {
+        if (!isset($_SESSION['user'])) {
+            header("Location: ?page=login");
+            exit;
+        }
+        $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
+        $mysqli = $db->getMysqli();
 
+        $status = $_SESSION['status'];
+        $userName = $_SESSION['user'];
+
+        if ($status == 2) {
+        // --- ЛОГІКА ДЛЯ АДМІНА ---
+            $lowStock = $mysqli->query("SELECT name, stock FROM products WHERE stock < 5")->fetch_all(MYSQLI_ASSOC);
+            $activeOrders = $mysqli->query("SELECT * FROM orders WHERE status = 'W trakcie' ORDER BY order_date DESC LIMIT 5")->fetch_all(MYSQLI_ASSOC);
+            $totalOrders = $mysqli->query("SELECT COUNT(*) as count FROM orders")->fetch_assoc()['count'];
+            $pendingCount = $mysqli->query("SELECT COUNT(*) as count FROM orders WHERE status = 'W trakcie'")->fetch_assoc()['count'];
+        } else {
+        // --- ЛОГІКА ДЛЯ ПРАЦІВНИКА (КОРИСТУВАЧА) ---
+        // Отримуємо ID поточного користувача
+            $userQuery = $mysqli->query("SELECT id FROM users WHERE username = '$userName'");
+            $userData = $userQuery->fetch_assoc();
+            $userId = $userData['id'];
+
+        // Останнє замовлення для картки статусу
+            $lastOrderResult = $mysqli->query("SELECT id, tracking_number, status FROM orders WHERE user_id = $userId ORDER BY order_date DESC LIMIT 1");
+            $lastOrder = $lastOrderResult->fetch_assoc();
+
+        // Історія замовлень для таблиці
+            $userOrders = $mysqli->query("SELECT id, order_date, total_price FROM orders WHERE user_id = $userId ORDER BY order_date DESC LIMIT 5")->fetch_all(MYSQLI_ASSOC);
+        }
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/dashboard.php';
         require '../app/views/layout/footer.php';

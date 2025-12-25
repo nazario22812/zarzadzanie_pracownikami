@@ -62,7 +62,7 @@
                 <thead>
                     <tr>
                         <th>ID Zamówienia</th>
-                        <th>ID Użytkownika</th>
+                        <th>Użytkownik</th>
                         <th>Data Zamówienia</th>
                         <th>Kwota Całkowita</th>
                         <th>Status</th>
@@ -72,7 +72,7 @@
                     <?php foreach ($orders as $order): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($order['id']); ?></td>
-                            <td><?php echo htmlspecialchars($order['user_id']); ?></td>
+                            <td><?php echo htmlspecialchars($order['login_uzytkownika']); ?></td>
                             <td><?php echo htmlspecialchars($order['list_produktow'] ?: 'Brak produktów'); ?></td>
                             <td><?php echo number_format($order['total_price'], 2, ',', ' '); ?> zł</td>
                             <td>

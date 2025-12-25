@@ -104,7 +104,7 @@ class PageController {
         }
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/dashboard.php';
-        require '../app/views/layout/footer.php';
+        //require '../app/views/layout/footer.php';
     }
 
     public function zapomniales_haslo() {
@@ -251,7 +251,7 @@ class PageController {
 
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/uzytkowniki.php';
-        require '../app/views/layout/footer.php';
+       // require '../app/views/layout/footer.php';
     }
 
     public function produkty() {
@@ -291,7 +291,7 @@ class PageController {
 
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/produkty.php';
-        require '../app/views/layout/footer.php';
+       // require '../app/views/layout/footer.php';
         
     }
 
@@ -350,7 +350,7 @@ class PageController {
 
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/koszyk.php';
-        require '../app/views/layout/footer.php';
+       // require '../app/views/layout/footer.php';
     }
 
     public function zamowienia() {
@@ -360,13 +360,13 @@ class PageController {
         }
         $db = new Baza('127.0.0.1', 'root', '', 'mojmagazyn');
         $mysqli = $db->getMysqli();
-        $sql = "SELECT o.*, 
+        $sql = "SELECT o.*, u.username as login_uzytkownika, 
             GROUP_CONCAT(CONCAT(oi.product_name, ' (x', oi.quantity, ')') SEPARATOR ', ') AS list_produktow
             FROM orders o
+            LEFT JOIN users u ON o.user_id = u.id
             LEFT JOIN order_items oi ON o.id = oi.order_id
             GROUP BY o.id
-            ORDER BY o.order_date DESC
-        ";
+            ORDER BY o.order_date DESC";
         
         $result = $mysqli->query($sql);
         $orders = $result->fetch_all(MYSQLI_ASSOC);
@@ -375,7 +375,7 @@ class PageController {
 
         require '../app/views/layout/header_zalogowany.php';
         require '../app/views/zamowienia.php';
-        require '../app/views/layout/footer.php';
+       // require '../app/views/layout/footer.php';
     }
 
     public function update_status() {

@@ -65,7 +65,7 @@
                             <div class="product-card">
                                 <div class="product-image">
                                     <?php if (!empty($product['image_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="product" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="product" style="width: 100%; height: 100%; ">
                                     <?php else: ?>
                                         <i class="icon-tools" style="font-size: 50px; color: #ddd;"></i>
                                     <?php endif; ?>
@@ -75,7 +75,7 @@
                                     <h3><?php echo htmlspecialchars($product['name']); ?></h3>
                                     <p class="product-price"><?php echo number_format($product['price'], 2, ',', ' '); ?> zł</p>
                                     <p class="prodeuct-count"><?php echo htmlspecialchars($product['stock']); ?> w magazynie</p>
-                        
+                                    <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p><br>
                                     <form action="?page=produkty" method="POST">
                                         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                             

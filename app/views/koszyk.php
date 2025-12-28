@@ -142,17 +142,61 @@
 
                     <div class="payment-methods">
                         <h4>Metoda płatności</h4>
+    
                         <label class="radio-container">
-                            <input type="radio" name="payment" value="cod" checked>
+                            <input type="radio" name="payment" value="cod" checked onchange="toggleCardDetails()">
                             <span class="checkmark"></span> Za pobraniem (gotówka)
                         </label>
+    
                         <label class="radio-container">
-                            <input type="radio" name="payment" value="transfer">
+                            <input type="radio" name="payment" value="transfer" onchange="toggleCardDetails()">
                             <span class="checkmark"></span> Przelew bankowy
                         </label>
+
+                        <label class="radio-container">
+                            <input type="radio" name="payment" value="card" id="card-radio" onchange="toggleCardDetails()">
+                            <span class="checkmark"></span> Karta płatnicza
+                        </label>
                     </div>
+
+                    <div id="card-input-box" class="checkout-section" style="display: none; margin-top: 20px; border-left: 4px solid #2688d1;">
+                        <h3><i class="icon-credit-card"></i> Dane karty</h3>
+                        <div class="form-group">
+                            <label>Numer karty</label>
+                            <input type="text" name="card_number" placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Data ważności</label>
+                                <input type="text" name="card_expiry" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" name="card_cvv" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function toggleCardDetails() {
+                            const cardBox = document.getElementById('card-input-box');
+                            const cardRadio = document.getElementById('card-radio');
+
+                            if (cardRadio.checked) {
+                                cardBox.style.display = 'block'; // Показуємо, якщо вибрана карта
+                            } else {
+                                cardBox.style.display = 'none';  // Ховаємо для інших методів
+                            }
+                        }
+                    </script>
                     <input type="hidden" name="total_amount" value="<?php echo $total; ?>">
+                    
+                    <?php if (!empty($cartItems)): ?>
                     <button type="submit" class="btn-order">Potwierdzam zamówienie</button>
+                    <?php else: ?>
+                    <script>
+                        alert('Twój koszyk jest pusty. Dodaj produkty przed złożeniem zamówienia.');
+                    </script>
+                    <?php endif; ?>
                 </div>
                 </div>
             </form>

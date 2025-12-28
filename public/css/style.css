@@ -443,6 +443,7 @@ a {
     font-weight: 600;
     color: #4b5563;
     margin-bottom: 8px;
+   
 }
 
 .form-group input {
@@ -715,3 +716,150 @@ a {
 .user-history-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
 .user-history-table th { text-align: left; color: white; border-bottom: 1px solid #eee; padding: 10px; }
 .user-history-table td { padding: 12px 10px; border-bottom: 1px solid #eee; }
+
+/* Додаткова стилізація вікна карти */
+#card-input-box {
+    animation: fadeIn 0.3s ease; /* Плавна поява */
+    background: #fdfdfd;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стиль для інпутів всередині вікна карти */
+#card-input-box input {
+    letter-spacing: 1px;
+    font-family: monospace; /* Для зручності введення цифр */
+}
+
+/* responsive styles */
+/* Мобільні пристрої (до 768px) */
+/* --- ГЛОБАЛЬНІ ВИПРАВЛЕННЯ --- */
+* {
+    box-sizing: border-box; /* Запобігає виходу елементів за межі через padding */
+}
+
+/* --- АДАПТАЦІЯ ДЛЯ ПЛАНШЕТІВ ТА ТЕЛЕФОНІВ (до 1024px) --- */
+@media (max-width: 1024px) {
+    .parent {
+        grid-template-columns: 1fr; /* Сайдбар переходить вгору */
+        grid-template-rows: auto 1fr;
+        height: auto;
+    }
+
+    .div1 {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 10px;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap; /* Дозволяє кнопкам переноситися, якщо їх багато */
+        gap: 5px;
+    }
+
+    .sidebar li a {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+
+    #logoutli {
+        border-top: none;
+        border-left: 1px solid #374151; /* Роздільник збоку замість верху */
+    }
+}
+
+/* --- АДАПТАЦІЯ ДЛЯ ТЕЛЕФОНІВ (до 768px) --- */
+@media (max-width: 768px) {
+    /* Логін, Реєстрація, Скидання пароля */
+    .login-box, .register-box, .reset-box {
+        margin: 40px auto;
+        padding: 30px 20px; /* Зменшуємо величезні відступи */
+        width: 95%;
+        max-width: 380px;
+    }
+
+    .login-box h2, .register-box h2 {
+        font-size: 24px;
+        padding-bottom: 20px;
+    }
+
+    .login-box input, .register-box input {
+        width: 100%; /* На весь рядок */
+    }
+
+    /* Профіль та сітки з інформацією */
+    .profile-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr; /* Стовпчик замість двох */
+        padding-top: 30px;
+    }
+
+    /* Зміна даних (Адмін/Користувач) */
+    .change-item {
+        grid-template-columns: 1fr; /* Елементи один під одним */
+        gap: 10px;
+    }
+
+    .change-item button {
+        width: 100%;
+    }
+
+    /* Дашборди */
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- АДАПТАЦІЯ ДЛЯ МАЛИХ ЕКРАНІВ (до 480px) --- */
+@media (max-width: 480px) {
+    .sidebar ul {
+        justify-content: flex-start;
+        overflow-x: auto; /* Скрол меню, якщо не влізає */
+        padding-bottom: 5px;
+    }
+
+    .sidebar li a {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    /* Таблиці */
+    .orders-section, .history-section, .users-box {
+        overflow-x: auto;
+        display: block;
+    }
+
+    table {
+        min-width: 500px; /* Запобігає «злипанню» тексту */
+    }
+
+    td, th {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    /* Кнопка замовлення та кошик */
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn-order {
+        padding: 15px;
+        font-size: 15px;
+    }
+}

@@ -280,7 +280,7 @@ class PageController {
             $stmtCart->bind_param("iii", $userId, $productId, $qty);
         
             if ($stmtCart->execute()) {
-                header("Location: ?page=koszyk");
+                header("Location: ?page=produkty");
                 exit;
             }
         }

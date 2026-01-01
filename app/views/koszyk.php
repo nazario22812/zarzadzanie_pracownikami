@@ -99,7 +99,7 @@
                     <div class="order-summary">
                         <?php 
                             include_once '../app/models/OrdersRepository.php';
-                            include_once '../app/models/UserRepository.php'; // Додаємо, щоб отримати ID
+                            include_once '../app/models/UserRepository.php'; 
     
                             $cr = new OrdersRepository();
                             $ur = new UserRepository();
@@ -182,9 +182,9 @@
                             const cardRadio = document.getElementById('card-radio');
 
                             if (cardRadio.checked) {
-                                cardBox.style.display = 'block'; // Показуємо, якщо вибрана карта
+                                cardBox.style.display = 'block'; 
                             } else {
-                                cardBox.style.display = 'none';  // Ховаємо для інших методів
+                                cardBox.style.display = 'none';  
                             }
                         }
                     </script>

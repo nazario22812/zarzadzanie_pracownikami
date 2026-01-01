@@ -1,18 +1,10 @@
 <?php
 session_start();
 
-/*
-|--------------------------------------------------------------------------
-| Routing – wybór strony
-|--------------------------------------------------------------------------
-*/
+
 $page = $_GET['page'] ?? 'login';
 
-/*
-|--------------------------------------------------------------------------
-| Prosta ochrona – bez logowania tylko login
-|--------------------------------------------------------------------------
-*/
+
 if (
     !isset($_SESSION['user']) &&
     !in_array($page, ['login', 'register', 'reset', 'verify_code', 'new_password'])
@@ -20,16 +12,7 @@ if (
     $page = 'login';
 }
 
-// // Тимчасово додайте це в index.php для тесту:
-// if (isset($_SESSION['user']) && $_SESSION['user'] == 'ytka') {
-//     $_SESSION['status'] = 2; 
-// }
 
-/*
-|--------------------------------------------------------------------------
-| Routing
-|--------------------------------------------------------------------------
-*/
 require_once '../app/controllers/PageController.php';
 require_once '../app/controllers/UserController.php';
 $usercontrl = new UserController();

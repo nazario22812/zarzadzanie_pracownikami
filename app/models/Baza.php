@@ -1,6 +1,6 @@
 <?php
     class Baza {
-        private $mysqli; //uchwyt do BD
+        private $mysqli; 
         public function __construct($serwer, $user, $pass, $baza) {
             $this->mysqli = new mysqli($serwer, $user, $pass, $baza);
             /* sprawdz połączenie */
@@ -9,23 +9,21 @@
                 $this->mysqli->connect_error);
                 exit();
             }
-            /* zmien kodowanie na utf8 */
+           
             if ($this->mysqli->set_charset("utf8")) {
-                //udało sie zmienić kodowanie
+                
             }
-        } //koniec funkcji konstruktora
+        } 
         function __destruct() {
             $this->mysqli->close();
         }
         public function select($sql, $pola) {
-            //parametr $sql – łańcuch zapytania select
-            //parametr $pola - tablica z nazwami pol w bazie
-            //Wynik funkcji – kod HTML tabeli z rekordami (String)
+            
             $tresc = "";
             if ($result = $this->mysqli->query($sql)) {
-                $ilepol = count($pola); //ile pól
-                $ile = $result->num_rows; //ile wierszy
-                // pętla po wyniku zapytania $results
+                $ilepol = count($pola); 
+                $ile = $result->num_rows; 
+               
                 $tresc.="<table><tbody>";
                 while ($row = $result->fetch_object()) {
                     $tresc.="<tr>";
@@ -36,7 +34,7 @@
                     $tresc.="</tr>";
                 }
                 $tresc.="</table></tbody>";
-                $result->close(); /* zwolnij pamięć */
+                $result->close(); 
             }
             return $tresc;
         }
@@ -51,5 +49,5 @@
         public function getMysqli() {
             return $this->mysqli;
         }
-    } //koniec klasy Baza
+    }
 ?>

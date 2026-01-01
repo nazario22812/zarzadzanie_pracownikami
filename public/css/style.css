@@ -134,15 +134,14 @@ a {
 
 
 .navigacja{
-    display: flex; /* Włącza Flexbox */
-    justify-content: space-between; /* Rozsuwa elementy na boki */
-    align-items: center; /* Wyśrodkowuje elementy w pionie */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .parent {
     height: 100dvh;
     display: grid;
-    /* Pierwsza kolumna bierze 3 części, druga 7 części wolnego miejsca */
     grid-template-columns: 1.5fr 8.5fr; 
     grid-template-rows: 1fr;
     gap: 0px;
@@ -150,6 +149,8 @@ a {
 
 .div1 {
     background-color: rgb(43, 52, 71);
+    background: #1f2937;
+
     padding: 10px;
     
 }
@@ -160,12 +161,16 @@ a {
 }
 
 .sidebar li a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  text-decoration: none;
-  color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #e5e7eb;
+    background: #374151;
+    border-radius: 5px;
+    
+
 }
 
 .sidebar li a:hover {
@@ -287,7 +292,7 @@ a {
     tr:hover {
         background-color: #f9f9f9;
     }
-    /* Styl przycisku */
+  
     .btn-info {
         background: #2ecc71;
         color: white;
@@ -308,7 +313,7 @@ a {
 }
 
 
-    /* Контейнер для форми зміни даних */
+    
 .info-change {
     margin-top: 40px;
     padding: 25px;
@@ -318,10 +323,10 @@ a {
     box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 
-/* Кожен рядок з інпутом та кнопкою */
+
 .change-item {
     display: grid;
-    grid-template-columns: 200px 1fr 180px; /* Вирівнювання: Мітка - Поле - Кнопка */
+    grid-template-columns: 200px 1fr 180px;
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
@@ -333,7 +338,6 @@ a {
     font-size: 0.95rem;
 }
 
-/* Стилізація текстових полів та селекту */
 .change-item input, 
 .change-item select {
     padding: 10px 12px;
@@ -349,7 +353,6 @@ a {
     outline: none;
 }
 
-/* Стилізація кнопок */
 .change-item button {
     background-color: #f8f9fa;
     color: #333;
@@ -369,16 +372,6 @@ a {
 }
 
 
-/* Адаптивність для малих екранів */
-/* @media (max-width: 768px) {
-    .change-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-    .change-item button {
-        width: 100%;
-    }
-} */
 
 
 
@@ -411,7 +404,6 @@ a {
     align-items: start;
 }
 
-/* Картки секцій */
 .checkout-section {
     background: #ffffff;
     padding: 30px;
@@ -432,7 +424,6 @@ a {
     margin-bottom: 20px;
 }
 
-/* Поля форми */
 .form-group {
     margin-bottom: 20px;
 }
@@ -467,7 +458,7 @@ a {
     gap: 20px;
 }
 
-/* Підсумок замовлення */
+
 .summary-section {
     background: var(--light-gray);
     position: sticky;
@@ -494,7 +485,7 @@ a {
     color: var(--primary-color);
 }
 
-/* Методи оплати */
+
 .payment-methods h4 {
     margin: 25px 0 15px;
 }
@@ -520,7 +511,7 @@ a {
     accent-color: var(--primary-color);
 }
 
-/* Кнопка */
+
 .btn-order {
     width: 100%;
     background: var(--primary-color);
@@ -544,25 +535,16 @@ a {
     transform: translateY(0);
 }
 
-/* Адаптивність */
 @media (max-width: 850px) {
     .checkout-grid {
         grid-template-columns: 1fr;
     }
 }
 
-/* Адаптивність */
-/* @media (max-width: 768px) {
-    .checkout-grid {
-        grid-template-columns: 1fr;
-    }
-} */
 
 
 
 
-
-/* Сітка для продуктів */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -570,7 +552,6 @@ a {
     margin-top: 20px;
 }
 
-/* Картка продукту */
 .product-card {
     background: white;
     border-radius: 12px;
@@ -610,7 +591,7 @@ a {
     margin-bottom: 15px;
 }
 
-/* Форма всередині картки */
+
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -667,14 +648,13 @@ a {
         line-height: 1.5;
     }
 
-    /* Стиль для "Все в комплекті" */
     .alert-box.success {
         background-color: #e6fffa;
         border: 1px solid #38a169;
         color: #2f855a;
     }
 
-    /* Стиль для "Брак продуктів" */
+   
     .alert-box.warning {
         background-color: #fff5f5;
         border: 1px solid #e53e3e;
@@ -717,9 +697,9 @@ a {
 .user-history-table th { text-align: left; color: white; border-bottom: 1px solid #eee; padding: 10px; }
 .user-history-table td { padding: 12px 10px; border-bottom: 1px solid #eee; }
 
-/* Додаткова стилізація вікна карти */
+
 #card-input-box {
-    animation: fadeIn 0.3s ease; /* Плавна поява */
+    animation: fadeIn 0.3s ease; 
     background: #fdfdfd;
 }
 
@@ -728,138 +708,162 @@ a {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Стиль для інпутів всередині вікна карти */
 #card-input-box input {
     letter-spacing: 1px;
-    font-family: monospace; /* Для зручності введення цифр */
+    font-family: monospace; 
 }
 
-/* responsive styles */
-/* Мобільні пристрої (до 768px) */
-/* --- ГЛОБАЛЬНІ ВИПРАВЛЕННЯ --- */
+
 * {
-    box-sizing: border-box; /* Запобігає виходу елементів за межі через padding */
+    box-sizing: border-box; 
 }
 
-/* --- АДАПТАЦІЯ ДЛЯ ПЛАНШЕТІВ ТА ТЕЛЕФОНІВ (до 1024px) --- */
+* {
+    box-sizing: border-box; 
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
 @media (max-width: 1024px) {
     .parent {
-        grid-template-columns: 1fr; /* Сайдбар переходить вгору */
-        grid-template-rows: auto 1fr;
-        height: auto;
+        grid-template-columns: 1fr !important; 
+        grid-template-rows: auto 1fr !important;
+        height: auto !important; 
+        min-height: 100vh;
+        display: flex !important;
+        flex-direction: column;
     }
 
     .div1 {
         position: sticky;
         top: 0;
-        z-index: 100;
-        padding: 10px;
+        z-index: 1000;
+        width: 100%;
+        height: auto !important;
+        background: #1f2937;
     }
 
     .sidebar ul {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        flex-wrap: wrap; /* Дозволяє кнопкам переноситися, якщо їх багато */
-        gap: 5px;
-    }
-
-    .sidebar li a {
-        padding: 8px 12px;
-        font-size: 14px;
-        border-radius: 6px;
-    }
-
-    #logoutli {
-        border-top: none;
-        border-left: 1px solid #374151; /* Роздільник збоку замість верху */
-    }
-}
-
-/* --- АДАПТАЦІЯ ДЛЯ ТЕЛЕФОНІВ (до 768px) --- */
-@media (max-width: 768px) {
-    /* Логін, Реєстрація, Скидання пароля */
-    .login-box, .register-box, .reset-box {
-        margin: 40px auto;
-        padding: 30px 20px; /* Зменшуємо величезні відступи */
-        width: 95%;
-        max-width: 380px;
-    }
-
-    .login-box h2, .register-box h2 {
-        font-size: 24px;
-        padding-bottom: 20px;
-    }
-
-    .login-box input, .register-box input {
-        width: 100%; /* На весь рядок */
-    }
-
-    /* Профіль та сітки з інформацією */
-    .profile-container {
-        padding: 20px;
-        margin: 10px;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr; /* Стовпчик замість двох */
-        padding-top: 30px;
-    }
-
-    /* Зміна даних (Адмін/Користувач) */
-    .change-item {
-        grid-template-columns: 1fr; /* Елементи один під одним */
+        padding: 10px;
         gap: 10px;
     }
 
-    .change-item button {
+    .sidebar li {
+        border: none !important;
+        margin: 0 !important;
+    }
+
+    .sidebar li a {
+        background: #374151;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .div2 {
         width: 100%;
-    }
-
-    /* Дашборди */
-    .action-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
+        overflow-x: hidden; 
     }
 }
 
-/* --- АДАПТАЦІЯ ДЛЯ МАЛИХ ЕКРАНІВ (до 480px) --- */
+
+@media (max-width: 768px) {
+    
+    .user-dashboard, .admin-dashboard, .container, .profile-container {
+        padding: 15px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+
+    
+    .stats-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 15px;
+    }
+
+    
+    .action-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+   
+    .status-row {
+        flex-direction: column !important; 
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    
+    .users-box, 
+    .orders-section, 
+    .table-wrapper, 
+    .inventory-check,
+    .orders-box {
+        width: 100% !important;
+        display: block !important;
+        overflow-x: auto !important; 
+        white-space: nowrap; 
+        padding-bottom: 15px;
+    }
+
+    table, .minimal-table, .user-history-table {
+        min-width: 600px; 
+        width: 100%;
+    }
+
+    .info-grid, .change-item {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+    .change-item input {
+        width: 100% !important;
+    }
+
+    .login-box, .register-box {
+        width: 90% !important;
+        padding: 25px !important;
+    }
+}
+
 @media (max-width: 480px) {
     .sidebar ul {
-        justify-content: flex-start;
-        overflow-x: auto; /* Скрол меню, якщо не влізає */
-        padding-bottom: 5px;
+        justify-content: flex-start !important;
+        overflow-x: auto !important; 
+        white-space: nowrap;
+        padding: 10px 5px;
     }
 
     .sidebar li a {
         font-size: 13px;
-        white-space: nowrap;
+        padding: 7px 10px;
     }
 
-    /* Таблиці */
-    .orders-section, .history-section, .users-box {
-        overflow-x: auto;
-        display: block;
-    }
-
-    table {
-        min-width: 500px; /* Запобігає «злипанню» тексту */
+    .topbar h1 {
+        font-size: 18px;
+        text-align: center;
     }
 
     td, th {
-        padding: 10px 8px;
-        font-size: 13px;
+        font-size: 12px !important;
+        padding: 8px 5px !important;
     }
 
-    /* Кнопка замовлення та кошик */
-    .checkout-grid {
-        grid-template-columns: 1fr;
+    .status-label-yellow {
+        padding: 5px 10px;
+        font-size: 12px;
     }
-    
-    .btn-order {
-        padding: 15px;
-        font-size: 15px;
+
+    .btn-blue, .btn-white, .btn-order {
+        width: 100% !important;
+        padding: 12px !important;
     }
 }

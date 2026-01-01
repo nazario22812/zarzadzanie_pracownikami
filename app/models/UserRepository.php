@@ -24,8 +24,7 @@
                 VALUES ('$username', '$first_name', '$last_name', $age, '$phone','$password', '$email', '$data', '$status')
             ";
 
-            // var_dump($sql);
-            // exit;
+            
             return $this->db->insert($sql);
         }
         public function getUserByUsername($username) {
@@ -34,7 +33,6 @@
         
             $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
         
-            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
             $result = $mysqli->query($sql);
 
             if ($result && $row = $result->fetch_assoc()) {
@@ -61,12 +59,11 @@
             $sql = "SELECT id FROM users WHERE username = '$username'";
             $result = $mysqli->query($sql);
 
-    // Перевіряємо, чи знайшли користувача
             if ($row = $result->fetch_assoc()) {
-                return (int)$row['id']; // Повертаємо тільки ID як число
+                return (int)$row['id']; 
             }
 
-            return null; // Якщо користувача не знайдено
+            return null; 
          }
 
         public function getUserByPhone($phone) {
@@ -75,7 +72,6 @@
         
             $sql = "SELECT * FROM users WHERE phone = '$phone' LIMIT 1";
         
-            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
             $result = $mysqli->query($sql);
 
             if ($result && $row = $result->fetch_assoc()) {
@@ -102,7 +98,6 @@
 
             $sql = "SELECT * FROM users WHERE id = '$id' LIMIT 1";
 
-            // Twoja Baza::select zwraca HTML, więc musimy pobrać dane bezpośrednio z mysqli
             $result = $mysqli->query($sql);
 
             if ($result && $row = $result->fetch_assoc()) {
@@ -127,12 +122,11 @@
             $mysqli = $this->db->getMysqli();
             $phone = $mysqli->real_escape_string($phone);
     
-    // HASZOWANIE NOWEGO HASŁA (Bardzo ważne!)
             $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
     
             $sql = "UPDATE users SET password = '$hashedPassword' WHERE phone = '$phone'";
     
-            return $this->db->insert($sql); // insert() u Ciebie wykonuje query
+            return $this->db->insert($sql); 
         }
 
         public function getUserStatus($username) {
@@ -184,7 +178,6 @@
 
             if ($result) {
                 while ($row = $result->fetch_assoc()) {
-                    // Zamiast tworzyć obiekt 'new User', dodajemy całą tablicę $row
                     $users[] = $row; 
                 }
             }
@@ -196,7 +189,6 @@
             $id = (int)$id; // Переконуємось, що це число
             $newEmail = $mysqli->real_escape_string($newEmail);
 
-    // Міняємо WHERE на id
             $sql = "UPDATE users SET email = '$newEmail' WHERE id = $id";
 
             return $mysqli->query($sql); 
@@ -207,7 +199,6 @@
             $id = (int)$id;
             $newPhone = $mysqli->real_escape_string($newPhone);
 
-            // Міняємо WHERE на id
             $sql = "UPDATE users SET phone = '$newPhone' WHERE id = $id";
 
             return $mysqli->query($sql);
@@ -218,7 +209,6 @@
             $id = (int)$id;
             $newStatus = (int)$newStatus;
 
-    // Міняємо WHERE на id
             $sql = "UPDATE users SET status = $newStatus WHERE id = $id";
 
             return $mysqli->query($sql);

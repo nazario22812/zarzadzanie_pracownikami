@@ -7,9 +7,8 @@
             if (isset($_GET['id'])) {
                 $userId = (int)$_GET['id']; 
         
-            // 1. Отримуємо дані користувача з бази через репозиторій
                 $ur = new UserRepository();
-                $userData = $ur->getUserById($userId); // Отримуємо масив або об'єкт
+                $userData = $ur->getUserById($userId); 
                 
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_type'])) {
@@ -25,7 +24,6 @@
                         $ur->updateUserEmail($id, $newEmail);
 
                     } elseif ($type === 'phone' && !empty($_POST['newPhone'])) {
-        // ВАЖЛИВО: використовуємо 'newPhone', бо так називається input у формі
                         $phone = filter_input(INPUT_POST, 'newPhone', FILTER_VALIDATE_REGEXP, [
                             'options' => ['regexp' => '/^\+?[0-9\s\-]{7,20}$/']
                         ]);
@@ -44,7 +42,6 @@
                     exit;
                 }
 
-// ЗАВАНТАЖЕННЯ ДАНИХ (для відображення профілю)
                 $targetUser = null;
                 if (isset($_GET['id'])) {
                     $userId = (int)$_GET['id'];
@@ -53,9 +50,7 @@
 
 
                 if ($userData) {
-                // 2. Підключаємо вигляд
                     require '../app/views/layout/header_back.php';
-                // Файл називається просто, без &id=...
                     require '../app/views/userdetails.php'; 
                     require '../app/views/layout/footer.php';
                 } else {

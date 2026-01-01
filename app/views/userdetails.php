@@ -3,12 +3,9 @@
         require_once '../app/models/UserRepository.php';
         $ur = new UserRepository();
 
-        // 1. Отримуємо ID користувача з URL (наприклад, ?page=user_details&id=5)
         if (isset($_GET['id'])) {
             $userId = (int)$_GET['id'];
             
-            // 2. Отримуємо об'єкт User через новий метод (або існуючий, якщо він шукає за ID)
-            // Якщо у вас є метод getUserById, краще використати його
             $targetUser = $ur->getUserById($userId); 
         }
 

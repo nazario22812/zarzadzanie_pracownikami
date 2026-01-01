@@ -1,7 +1,6 @@
 <?php
     require_once '../app/models/User.php';
     function walidacja() {
-    // Tablica filtrów dla poszczególnych pól formularza
     $args = [
 
         'username' => [
@@ -47,14 +46,9 @@
         'email' => FILTER_VALIDATE_EMAIL
     ];
 
-
-    // Przefiltruj dane z formularza metodą POST zgodnie z regułami powyżej
     $dane = filter_input_array(INPUT_POST, $args);
 
-    // Wyświetl tablicę przefiltrowanych danych (pomoc diagnostyczna)
-    //var_dump($dane);
-
-    // Sprawdź, czy któreś pole jest niepoprawne (false lub NULL)
+   
     $errors = "";
     foreach ($dane as $key => $val) {
         if ($val === false or $val === NULL) {
@@ -62,9 +56,7 @@
         }
     }
     $user = null;
-    // Jeśli nie ma błędów — dane są poprawne
     if ($errors === "") {
-        // Zapisz dane do pliku dane.txt
         $user = new User(
             $dane['username'],
             $dane['first_name'],
@@ -76,7 +68,6 @@
             false
         );
     } else {
-        // W przeciwnym wypadku — pokaż błędy użytkownikowi
         echo "<br>Niepoprawne dane w polach: " . $errors;
         $user = null;
         
